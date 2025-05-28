@@ -11,7 +11,8 @@ class LottieSliderHelper {
   Timer? _timer;
 
   int currentPage = 0;
-  int get pageCount => lottieAnimationPaths.length;
+  int get pageCount => 
+  lottieAnimationPaths.length;
 
   LottieSliderHelper({
     this.interval = const Duration(seconds: 3),
@@ -20,10 +21,12 @@ class LottieSliderHelper {
   /// Start the auto‐advance loop.
   void start() {
     _timer = Timer.periodic(interval, (_) {
-      final next = (currentPage + 1) % pageCount;
+      final next = 
+      (currentPage + 1) % pageCount;
       controller.animateToPage(
         next,
-        duration: const Duration(milliseconds: 500),
+        duration: const Duration
+        (milliseconds: 500),
         curve: Curves.linear,
       );
       currentPage = next;
@@ -41,7 +44,8 @@ class LottieSliderHelper {
     _timer?.cancel();
     controller.animateToPage(
       page,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(
+        milliseconds: 500),
       curve: Curves.linear,
     );
     currentPage = page;
