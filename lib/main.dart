@@ -109,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const CustomePainterExmaple()));
+                          builder: (context) => const CustomPainterExample()));
                 },
                 child: const Text(
                   "Custom Painter Example",
