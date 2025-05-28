@@ -1,6 +1,7 @@
+// lib/pages/animated_positioned_directional_example.dart
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'position_helper.dart';
+import 'positioned_controller.dart';
 
 class AnimatedPositionedDirectionalExample extends StatefulWidget {
   const AnimatedPositionedDirectionalExample({super.key});
@@ -12,85 +13,70 @@ class AnimatedPositionedDirectionalExample extends StatefulWidget {
 
 class _AnimatedPositionedDirectionalExampleState
     extends State<AnimatedPositionedDirectionalExample> {
-  double _srart = 0;
-  double _top = 0;
+  Offset _position = Offset.zero;
+  static const double _step = 50.0;
+  static const Size _boxSize = Size(100, 100);
 
-  void _moveLeft() {
+  void _move(MoveDirection dir) {
+    final media = MediaQuery.of(context).size;
+    // 1) compute raw new pos
+    final newPos = applyDirection(
+      current: _position,
+      direction: dir,
+      step: _step,
+    );
+    // 2) clamp it
+    final clampedX = clampHorizontal(
+      value: newPos.dx,
+      screenWidth: media.width,
+      widgetWidth: _boxSize.width,
+    );
+    final clampedY = clampVertical(
+      value: newPos.dy,
+      screenHeight: media.height - kToolbarHeight, // subtract AppBar if needed
+      widgetHeight: _boxSize.height + 16, // account for padding
+    );
     setState(() {
-      _srart -= 50;
-      if (_srart < 0) {
-        _srart = 0;
-      }
-    });
-  }
-
-  void _moveRight() {
-    setState(() {
-      _srart += 50;
-      if (_srart > MediaQuery.of(context).size.width - 120) {
-        _srart = MediaQuery.of(context).size.width - 120;
-      }
-    });
-  }
-
-  void _moveUp() {
-    setState(() {
-      _top -= 50;
-      if (_top < 0) {
-        _top = 0;
-      }
-    });
-  }
-
-  void _moveDown() {
-    setState(() {
-      _top += 50;
-      if (_top > MediaQuery.of(context).size.height - 320) {
-        _top = MediaQuery.of(context).size.height - 320;
-      }
+      _position = Offset(clampedX, clampedY);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Animated Positioned Directional Example"),
-      ),
+      appBar: AppBar(title: const Text("Animated Positioned Directional")),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Stack(
           children: [
             AnimatedPositionedDirectional(
-                start: _srart,
-                top: _top,
-                duration: const Duration(seconds: 1),
-                child: Container(
-                  width: 100,
-                  height: 100,
-                  color: Colors.transparent,
-                  child: Image.asset("assets/jerry.png"),
-                )),
+              start: _position.dx,
+              top: _position.dy,
+              duration: const Duration(milliseconds: 300),
+              child: SizedBox(
+                width: _boxSize.width,
+                height: _boxSize.height,
+                child: Image.asset("assets/jerry.png"),
+              ),
+            ),
             Align(
               alignment: Alignment.bottomCenter,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                      onPressed: _moveLeft,
-                      child: const Icon(Icons.arrow_circle_left_outlined)),
-                  ElevatedButton(
-                      onPressed: _moveRight,
-                      child: const Icon(Icons.arrow_circle_right_outlined)),
-                  ElevatedButton(
-                      onPressed: _moveUp,
-                      child: const Icon(Icons.arrow_circle_up)),
-                  ElevatedButton(
-                      onPressed: _moveDown,
-                      child: const Icon(Icons.arrow_circle_down))
-                ],
+                children: MoveDirection.values.map((dir) {
+                  final icon = {
+                    MoveDirection.left: Icons.arrow_left,
+                    MoveDirection.right: Icons.arrow_right,
+                    MoveDirection.up: Icons.arrow_upward,
+                    MoveDirection.down: Icons.arrow_downward,
+                  }[dir]!;
+                  return ElevatedButton(
+                    onPressed: () => _move(dir),
+                    child: Icon(icon),
+                  );
+                }).toList(),
               ),
-            )
+            ),
           ],
         ),
       ),
