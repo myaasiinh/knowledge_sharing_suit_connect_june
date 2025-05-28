@@ -40,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Flutter Animation Course"),
+          title: const Text("Knowledge Sharing 6 June"),
         ),
         body: Center(
             child: ListView(
@@ -64,6 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
                 child: const Text("Animated Positioned Directional Example")),
             ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                 onPressed: () {
                   Navigator.push(
                       context,
@@ -71,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           builder: (context) =>
                               const PositionedTransitionExamlpe()));
                 },
-                child: const Text("Positioned Transition Examlpe")),
+                child: const Text("Positioned Transition Example")),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                 onPressed: () {
@@ -102,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   "Page Mix Size Fade Transition",
                   style: TextStyle(color: Colors.white),
                 )),
-                ElevatedButton(
+            ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
                 onPressed: () {
                   Navigator.push(
@@ -111,10 +112,10 @@ class _MyHomePageState extends State<MyHomePage> {
                           builder: (context) => const CustomePainterExmaple()));
                 },
                 child: const Text(
-                  "Custome Painter Exmaple",
+                  "Custom Painter Example",
                   style: TextStyle(color: Colors.white),
                 )),
-                  ElevatedButton(
+            ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
                 onPressed: () {
                   Navigator.push(
@@ -123,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           builder: (context) => const LottieSilderExample()));
                 },
                 child: const Text(
-                  "Lottie Silder Example",
+                  "Lottie Slide Example",
                   style: TextStyle(color: Colors.white),
                 )),
           ],
