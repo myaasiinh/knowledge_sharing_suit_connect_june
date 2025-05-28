@@ -1,0 +1,30 @@
+name: knowledge_sharing_suit_connect_june
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.6.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  lottie: ^3.3.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+
+
+  assets:
+    - assets/jerry.png
+    - assets/tom.png
+    - assets/dog.png
+    - assets/cheese.png
+    - assets/lottie/bird.json
+    - assets/lottie/car.json
+    - assets/lottie/tigger.json
