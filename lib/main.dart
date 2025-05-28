@@ -121,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const LottieSilderExample()));
+                          builder: (context) => const LottieSliderExample()));
                 },
                 child: const Text(
                   "Lottie Slide Example",
