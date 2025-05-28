@@ -70,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              const PositionedTransitionExamlpe()));
+                              const PositionedTransitionExample()));
                 },
                 child: const Text("Positioned Transition Example")),
             ElevatedButton(

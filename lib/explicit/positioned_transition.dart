@@ -1,106 +1,80 @@
+// lib/pages/positioned_transition_example.dart
 import 'package:flutter/material.dart';
+import 'animation_helper.dart';
 
-class PositionedTransitionExamlpe extends StatefulWidget {
-  const PositionedTransitionExamlpe({super.key});
+class PositionedTransitionExample extends StatefulWidget {
+  const PositionedTransitionExample({super.key});
 
   @override
-  State<PositionedTransitionExamlpe> createState() =>
-      _PositionedTransitionExamlpeState();
+  State<PositionedTransitionExample> createState() =>
+      _PositionedTransitionExampleState();
 }
 
-class _PositionedTransitionExamlpeState
-    extends State<PositionedTransitionExamlpe>
+class _PositionedTransitionExampleState
+    extends State<PositionedTransitionExample>
     with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<RelativeRect> _jerryAnimation;
-  late Animation<RelativeRect> _tomAnimation;
-  late Animation<RelativeRect> _spikeAnimation;
+  late final PositionedAnimations _animations;
 
   @override
   void initState() {
     super.initState();
-
-    _controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 300));
-
-    _jerryAnimation = RelativeRectTween(
-            begin: const RelativeRect.fromLTRB(0, 0, 0, 0),
-            end: const RelativeRect.fromLTRB(300, 300, 0, 0))
-        .animate(_controller);
-
-    _tomAnimation = RelativeRectTween(
-            begin: const RelativeRect.fromLTRB(0, 0, 0, 0),
-            end: const RelativeRect.fromLTRB(150, 150, 0, 0))
-        .animate(_controller);
-
-    _spikeAnimation = RelativeRectTween(
-            begin: const RelativeRect.fromLTRB(0, 0, 0, 0),
-            end: const RelativeRect.fromLTRB(50, 50, 0, 0))
-        .animate(_controller);
-  }
-
-  void _startAnimation() {
-    _controller.reset();
-    _controller.forward();
-  }
-
-  void _reverseAnimation() {
-    _controller.reverse();
+    _animations = PositionedAnimations(vsync: this);
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _animations.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Positioned Transition Examlpe"),
-        ),
-        body: Stack(
-          children: [
-            PositionedTransition(
-                rect: _spikeAnimation,
-                child: Container(
-                  width: 100,
-                  height: 100,
-                  color: Colors.blueGrey,
-                  child: Image.asset("assets/dog.png"),
-                )),
-            PositionedTransition(
-                rect: _tomAnimation,
-                child: Container(
-                  width: 100,
-                  height: 100,
-                  color: Colors.grey,
-                  child: Image.asset("assets/tom.png"),
-                )),
-            PositionedTransition(
-                rect: _jerryAnimation,
-                child: Container(
-                  width: 100,
-                  height: 100,
-                  color: Colors.orange,
-                  child: Image.asset("assets/jerry.png"),
-                )),
-            Align(
-              alignment: Alignment.bottomCenter,
+      appBar: AppBar(title: const Text("Positioned Transition Example")),
+      body: Stack(
+        children: [
+          PositionedTransition(
+            rect: _animations.spike,
+            child: _buildImageBox("assets/dog.png", Colors.blueGrey),
+          ),
+          PositionedTransition(
+            rect: _animations.tom,
+            child: _buildImageBox("assets/tom.png", Colors.grey),
+          ),
+          PositionedTransition(
+            rect: _animations.jerry,
+            child: _buildImageBox("assets/jerry.png", Colors.orange),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 24),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
-                      onPressed: _startAnimation,
-                      child: const Icon(Icons.start)),
+                    onPressed: _animations.forward,
+                    child: const Icon(Icons.play_arrow),
+                  ),
                   ElevatedButton(
-                      onPressed: _reverseAnimation,
-                      child: const Icon(Icons.close))
+                    onPressed: _animations.reverse,
+                    child: const Icon(Icons.replay),
+                  ),
                 ],
               ),
-            )
-          ],
-        ));
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildImageBox(String asset, Color bg) {
+    return Container(
+      width: 100,
+      height: 100,
+      color: bg,
+      child: Image.asset(asset),
+    );
   }
 }
