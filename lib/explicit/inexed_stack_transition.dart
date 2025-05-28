@@ -1,4 +1,6 @@
+// lib/pages/indexed_stack_transition_example.dart
 import 'package:flutter/material.dart';
+import 'inexed_stack_helper.dart';
 
 class IndexedStackTransitionExample extends StatefulWidget {
   const IndexedStackTransitionExample({super.key});
@@ -11,83 +13,51 @@ class IndexedStackTransitionExample extends StatefulWidget {
 class _IndexedStackTransitionExampleState
     extends State<IndexedStackTransitionExample>
     with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _opacityAnimation;
-  late Animation<double> _scaleAnimation;
-  int _currentIndex = 0;
+late final IndexedStackTransitionHelper _animator;
 
   @override
   void initState() {
     super.initState();
-    _controller =
-        AnimationController(vsync: this, duration: const Duration(seconds: 1));
-
-    _opacityAnimation =
-        Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
-
-    _scaleAnimation = Tween<double>(begin: 0.1, end: 1.0).animate(_controller);
-
-    _controller.forward();
+    _animator = IndexedStackTransitionHelper(vsync: this);
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _animator.dispose();
     super.dispose();
-  }
-
-  void _goToNextScreen() {
-    _currentIndex = _currentIndex + 1;
-    if (_currentIndex == 3) {
-      _currentIndex = 0;
-    }
-    setState(() {
-      _controller.reset();
-      _controller.forward();
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Indexed Stack Transition Example"),
-      ),
+      appBar: AppBar(title: const Text("IndexedStack Transition")),
       body: IndexedStack(
-        index: _currentIndex, // 0,1,2
+        index: _animator.currentIndex,
         children: [
-          ScaleTransition(
-            scale: _scaleAnimation,
-            child: FadeTransition(
-              opacity: _opacityAnimation,
-              child: Container(
-                alignment: Alignment.center,
-                color: Colors.red,
-                child: Image.asset("assets/jerry.png"),
-              ),
-            ),
-          ),
-          ScaleTransition(
-            scale: _scaleAnimation,
-            child: Container(
-              alignment: Alignment.center,
-              color: Colors.blue,
-              child: Image.asset("assets/dog.png"),
-            ),
-          ),
-          ScaleTransition(
-            scale: _scaleAnimation,
-            child: Container(
-              alignment: Alignment.center,
-              color: Colors.green,
-              child: Image.asset("assets/tom.png"),
-            ),
-          )
+          _buildChild(Colors.red,   "assets/jerry.png"),
+          _buildChild(Colors.blue,  "assets/dog.png"),
+          _buildChild(Colors.green, "assets/tom.png"),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _goToNextScreen,
+        onPressed: () {
+          setState(_animator.goToNext);
+        },
         child: const Icon(Icons.arrow_downward),
+      ),
+    );
+  }
+
+  Widget _buildChild(Color bg, String asset) {
+    return ScaleTransition(
+      scale: _animator.scale,
+      child: FadeTransition(
+        opacity: _animator.opacity,
+        child: Container(
+          color: bg,
+          alignment: Alignment.center,
+          child: Image.asset(asset),
+        ),
       ),
     );
   }
