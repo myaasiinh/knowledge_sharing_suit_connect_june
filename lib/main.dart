@@ -39,52 +39,83 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Knowledge Sharing 6 June"),
-        ),
-        body: Center(
-            child: ListView(
+      appBar: AppBar(
+        title: const Text("Knowledge Sharing 6 June"),
+      ),
+      body: Padding(
+        // Menambahkan padding di keempat sisi: 16px
+        padding: const EdgeInsets.all(16.0),
+        child: ListView(
           physics: const BouncingScrollPhysics(),
           children: [
-            ElevatedButton(
+            // Setiap tombol dibungkus Padding untuk memberikan jarak vertikal
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const AnimatedAlignExample()));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AnimatedAlignExample(),
+                    ),
+                  );
                 },
-                child: const Text("Animated Align Example")),
-            ElevatedButton(
+                child: const Text("Animated Align Example"),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              const AnimatedPositionedDirectionalExample()));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          const AnimatedPositionedDirectionalExample(),
+                    ),
+                  );
                 },
-                child: const Text("Animated Positioned Directional Example")),
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                child: const Text("Animated Positioned Directional Example"),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: ElevatedButton(
+                style:
+                    ElevatedButton.styleFrom(backgroundColor: Colors.red),
                 onPressed: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              const PositionedTransitionExample()));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PositionedTransitionExample(),
+                    ),
+                  );
                 },
-                child: const Text("Positioned Transition Example")),
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                child: const Text("Positioned Transition Example"),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: ElevatedButton(
+                style:
+                    ElevatedButton.styleFrom(backgroundColor: Colors.red),
                 onPressed: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              const IndexedStackTransitionExample()));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          const IndexedStackTransitionExample(),
+                    ),
+                  );
                 },
-                child: const Text("Indexed Stack Transition Example")),
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
+                child: const Text("Indexed Stack Transition Example"),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: ElevatedButton(
+                style:
+                    ElevatedButton.styleFrom(backgroundColor: Colors.black),
                 onPressed: () {
                   Navigator.of(context)
                       .push(PageSizeTransition(const PageTwo()));
@@ -92,9 +123,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: const Text(
                   "Page Size Transition",
                   style: TextStyle(color: Colors.white),
-                )),
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: ElevatedButton(
+                style:
+                    ElevatedButton.styleFrom(backgroundColor: Colors.black),
                 onPressed: () {
                   Navigator.of(context)
                       .push(PageMixSizeFadeTransition(const PageTwo()));
@@ -102,32 +138,50 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: const Text(
                   "Page Mix Size Fade Transition",
                   style: TextStyle(color: Colors.white),
-                )),
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: ElevatedButton(
+                style:
+                    ElevatedButton.styleFrom(backgroundColor: Colors.green),
                 onPressed: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const CustomPainterExample()));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CustomPainterExample(),
+                    ),
+                  );
                 },
                 child: const Text(
                   "Custom Painter Example",
                   style: TextStyle(color: Colors.white),
-                )),
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: ElevatedButton(
+                style:
+                    ElevatedButton.styleFrom(backgroundColor: Colors.green),
                 onPressed: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const LottieSliderExample()));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LottieSliderExample(),
+                    ),
+                  );
                 },
                 child: const Text(
                   "Lottie Slide Example",
                   style: TextStyle(color: Colors.white),
-                )),
+                ),
+              ),
+            ),
           ],
-        )));
+        ),
+      ),
+    );
   }
 }
